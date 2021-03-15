@@ -1,0 +1,34 @@
+version: '3.8'
+x-references:
+  envs: &envs
+    MYSQL_ROOT_PASSWORD: password
+    TZ: Azia/Tokyo
+    LANG: C.UTF-8
+services:
+  db:
+    image: mysql:8.0.23
+    volumes:
+      - db_data:/var/lib/mysql:delegated
+    ports:
+      - '3307:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    environment: *envs
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    stdin_open: true
+    environment: *envs
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app:cached
+      - bundle:/usr/local/bundle:delegated
+
+volumes:
+  db_data:
+  bundle:
