@@ -6,7 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :metas %>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_pack_tag 'application' %>
     <%= yield :stylesheets %>
     <%= javascript_pack_tag 'application' %>
     <%= yield :javascripts %>
