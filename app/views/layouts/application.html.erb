@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>App</title>
+    <title><%="#{yield(:title)} | gamiis"%></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= yield :metas %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= yield :stylesheets %>
     <%= javascript_pack_tag 'application' %>
+    <%= yield :javascripts %>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+    </header>
+    <main>
+      <%= yield :content%>
+    </main>
+    <footer>
+    </footer>
   </body>
 </html>
