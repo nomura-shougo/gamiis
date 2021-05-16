@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%="#{yield(:title)} | gamiis"%></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= yield :metas %>
-    <%= stylesheet_pack_tag 'application' %>
-    <%= yield :stylesheets %>
-    <%= javascript_pack_tag 'application' %>
-    <%= yield :javascripts %>
-  </head>
 
-  <body>
-    <header>
-    </header>
-    <main>
-      <%= yield :content%>
-    </main>
-    <footer>
-    </footer>
-  </body>
+<head>
+  <title><%="#{yield(:title)} | gamiis"%></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= yield :metas %>
+  <%= stylesheet_pack_tag 'application' %>
+  <%= yield :stylesheets %>
+  <%= javascript_pack_tag 'application' %>
+  <%= yield :javascripts %>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Gamiis</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          </ul>
+          <a class="btn btn-primary me-3" href="#">新規登録</a>
+          <a class="btn btn-secondary" href="#">ログイン</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <%= yield :content %>
+  </main>
+  <footer>
+  </footer>
+</body>
+
 </html>
