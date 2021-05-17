@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: 'groups#index'
   resources :groups
   resources :posts
+  resources :users
 end
