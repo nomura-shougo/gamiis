@@ -48,7 +48,25 @@
               </div>
             </div>
           </div>
+          <% @topics.each do |topic| %>
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-3">
+                  <a href="#">
+                    <img src="..." class="stretched-link" alt="Apex IMAGE">
+                  </a>
+                </div>
+                <div class="col-md-9">
+                  <div class="card-title"><%= topic.name %></div>
+                  <div class="card-body">
+                    <p class="card-text"><small>190人</small> <small>5分前</small><a href="#" class="float-end">削除</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
+        <%= paginate @topics %>
       </div>
     </div>
   </div>
