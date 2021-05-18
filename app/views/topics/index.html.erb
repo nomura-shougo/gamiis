@@ -26,8 +26,15 @@
         </div>
         <div class="col-9">
           <div class="float-end">
-            <a class="btn btn-success" href="#">新しいグループを作る</a>
+            <%= link_to '新しいグループを作る', new_topic_path, class: 'btn btn-success' %>
           </div>
+        </div>
+        <div class="col-12">
+          <% flash.each do |message_type, message| %>
+          <p class="text-center alert-primary py-3">
+            <%= message %>
+          </p>
+          <% end %>
         </div>
       </div>
       <div class="row g-3">
@@ -36,7 +43,7 @@
             <div class="row g-0">
               <div class="col-md-3">
                 <a href="#">
-                  <img src="..." class="stretched-link" alt="Apex IMAGE">
+                  <img src="..." class="" alt="Apex IMAGE">
                 </a>
               </div>
               <div class="col-md-9">
@@ -53,13 +60,13 @@
               <div class="row g-0">
                 <div class="col-md-3">
                   <a href="#">
-                    <img src="..." class="stretched-link" alt="Apex IMAGE">
+                    <img src="..." class="" alt="Apex IMAGE">
                   </a>
                 </div>
                 <div class="col-md-9">
                   <div class="card-title"><%= topic.name %></div>
                   <div class="card-body">
-                    <p class="card-text"><small>190人</small> <small>5分前</small><a href="#" class="float-end">削除</a></p>
+                    <p class="card-text"><small>190人</small> <small>5分前</small><%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end' %></p>
                   </div>
                 </div>
               </div>
