@@ -31,7 +31,7 @@
         </div>
         <div class="col-12">
           <% flash.each do |message_type, message| %>
-          <p class="text-center alert-primary py-3">
+          <p class="text-center alert-<%= message_type %> py-3">
             <%= message %>
           </p>
           <% end %>
