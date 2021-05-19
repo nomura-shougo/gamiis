@@ -23,7 +23,7 @@ class TopicsController < ApplicationController
       flash[:danger] = 'グループが存在しません'
     else
       topic.destroy!
-      flash[:success] = 'グループを削除しました。'
+      flash[:success] = 'グループを削除しました'
     end
 
     redirect_to topics_url

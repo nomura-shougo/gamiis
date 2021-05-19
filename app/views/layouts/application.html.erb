@@ -23,10 +23,26 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <% if logged_in? %>
+          <ul class="navbar-nav ms-auto mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                ユーザ名
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">プロフィール</a></li>
+                <hr class="dropdown-divider">
+                <li><%= link_to 'ログアウト', signout_path, class: 'dropdown-item' %></li>
+              </ul>
+            </li>
           </ul>
-          <%= link_to '新規登録', signup_path, class: 'btn btn-primary me-3' %>
-          <%= link_to 'ログイン', signin_path, class: 'btn btn-secondary' %>
+          <% else %>
+          <div class="ms-auto">
+            <%= link_to '新規登録', signup_path, class: 'btn btn-primary me-3' %>
+            <%= link_to 'ログイン', signin_path, class: 'btn btn-secondary' %>
+          </div>
+          <% end %>
         </div>
       </div>
     </nav>
