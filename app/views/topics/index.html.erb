@@ -66,7 +66,7 @@
                 </a>
               </div>
               <div class="col-md-9">
-                <div class="card-title"><%= topic.name %></div>
+                <div class="card-title"><%= link_to topic.name, topic_posts_path(topic) %></div>
                 <div class="card-body">
                   <p class="card-text"><small>190人</small>
                     <small>5分前</small><%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end' %>
