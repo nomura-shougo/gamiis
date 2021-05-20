@@ -1,4 +1,23 @@
 <% content_for :title, 'gamiis' %>
+<% content_for :stylesheets do %>
+<style>
+  .chat-textarea {
+    resize: none;
+    max-height: 280px;
+  }
+
+</style>
+<% end %>
+<% content_for :javascripts do %>
+<script>
+  $(document).ready(function () {
+    $("textarea").attr("rows", 1).on("input", e => {
+      $(e.target).height(0).innerHeight(e.target.scrollHeight);
+    });
+  });
+
+</script>
+<% end %>
 <% content_for :content do %>
 <div class="container">
   <div class="row mb-4">
@@ -57,6 +76,16 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fixed-bottom">
+  <div class="container">
+    <div class="col-lg-6 offset-lg-3 bg-light pt-2 px-2">
+      <textarea class="form-control chat-textarea mb-1"></textarea>
+      <div class="text-end">
+        <a class="btn btn-sm btn-success text-end mb-2">送信</a>
       </div>
     </div>
   </div>
