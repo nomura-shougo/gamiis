@@ -38,24 +38,6 @@
         </div>
       </div>
       <div class="row g-2 mb-4">
-        <div class="col-12">
-          <div class="card">
-            <div class="row g-0">
-              <div class="col-md-3">
-                <a href="#">
-                  <img src="..." class="" alt="Apex IMAGE">
-                </a>
-              </div>
-              <div class="col-md-9">
-                <div class="card-title">Apex Legends</div>
-                <div class="card-body">
-                  <p class="card-text">Apex Legends 総合</p>
-                  <p class="card-text"><small>190人</small> <small>5分前</small><a href="#" class="float-end">削除</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <% @topics.each do |topic| %>
         <div class="col-12">
           <div class="card">
@@ -66,11 +48,17 @@
                 </a>
               </div>
               <div class="col-md-9">
-                <div class="card-title"><%= link_to topic.name, topic_posts_path(topic) %></div>
+                <div class="card-title">
+                  <%= link_to topic.name, topic_posts_path(topic), class: 'stretched-link' %></div>
                 <div class="card-body">
                   <p class="card-text"><small>190人</small>
-                    <small>5分前</small><%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end' %>
+                    <small>5分前</small><%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end position-relative', style: 'z-index: 2;' %>
                   </p>
+                  <% unless logged_in? && current_user&.participations.find_by(topic_id: topic.id) %>
+                  <div class="float-end mb-2">
+                    <%= link_to '参加する', topic_participations_path(topic), method: 'post', class: 'btn btn-primary position-relative', style: 'z-index: 2;' %>
+                  </div>
+                  <% end %>
                 </div>
               </div>
             </div>

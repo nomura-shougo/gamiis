@@ -50,12 +50,15 @@
   <div class="row mb-4">
     <div class="col-lg-6 offset-lg-3">
       <div class="row g-3 my-1">
+        <% flash.each do |message_type, message| %>
         <div class="col-12">
-          <% flash.each do |message_type, message| %>
           <p class="text-center alert-<%= message_type %> py-3">
             <%= message %>
           </p>
-          <% end %>
+        </div>
+        <% end %>
+        <div class="col-12">
+          <h3><%= @topic.name %></h3>
         </div>
         <div class="col-12">
           <div class="input-group">
@@ -90,7 +93,8 @@
                     チャットだよ
                   </div>
                   <div>
-                    <p><%= post.user.name %> <span class="text-secondary"><%= time_ago_in_words(post.created_at) %>
+                    <p><%= post.user.name %> <span
+                        class="text-secondary ms-2 small"><%= time_ago_in_words(post.created_at) %>
                         ago</span></p>
                     <p><%= post.content %></p>
                   </div>
@@ -131,6 +135,8 @@
 </div>
 <div class="fixed-bottom">
   <div class="container">
+    <% debug logged_in? %>
+    <% if logged_in? && current_user&.participations.find_by(topic_id: @topic.id)%>
     <div class="col-lg-6 offset-lg-3 bg-light pt-2 px-2">
       <%= form_for [@topic, @new_post] do |f| %>
       <%= f.text_area :content, class: 'form-control chat-textarea mb-1', placeholder: 'チャットを入力' %>
@@ -140,6 +146,22 @@
       </div>
       <% end %>
     </div>
+    <% else %>
+    <div class="col-lg-6 offset-lg-3">
+      <div class="bg-secondary px-3 py-3">
+        <div class="row">
+          <div class="col-8 d-flex align-items-center justify-content-center text-white">
+            グループに参加しよう！
+          </div>
+          <div class="col-4">
+            <div class="float-end">
+              <%= link_to '参加する', topic_participations_path(@topic), method: 'post', class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
   </div>
 </div>
 <% end %>

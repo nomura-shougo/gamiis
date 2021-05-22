@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   resources :users
   resources :topics do
     resources :posts
+    resources :participations, only: [:create, :destroy]
   end
 end
