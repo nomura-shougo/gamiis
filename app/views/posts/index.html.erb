@@ -9,11 +9,38 @@
 </style>
 <% end %>
 <% content_for :javascripts do %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+  integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   $(document).ready(function () {
+    // チャット入力フォームの大きさ制御
     $("textarea").attr("rows", 1).on("input", e => {
       $(e.target).height(0).innerHeight(e.target.scrollHeight);
     });
+
+    if ($.cookie("activeTab")) {
+      tab_name = $.cookie("activeTab")
+      $('a[id="' + tab_name + '-tab"]')[0].click();
+      if (tab_name == 'pills-chat') {
+        $('#post_post_type').val('0')
+      } else if (tab_name == 'pills-find-member') {
+        $('#post_post_type').val('1')
+      }
+    } else {
+      $('a[id="pills-chat-tab"]')[0].click();
+      $('#post_post_type').val('0')
+    }
+
+    $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
+      tab_name = e.target.href.split("#")[1]
+      if (tab_name == 'pills-chat') {
+        $('#post_post_type').val('0')
+      } else if (tab_name == 'pills-find-member') {
+        $('#post_post_type').val('1')
+      }
+      $.cookie("activeTab", tab_name);
+    })
   });
 
 </script>
@@ -24,9 +51,16 @@
     <div class="col-lg-6 offset-lg-3">
       <div class="row g-3 my-1">
         <div class="col-12">
+          <% flash.each do |message_type, message| %>
+          <p class="text-center alert-<%= message_type %> py-3">
+            <%= message %>
+          </p>
+          <% end %>
+        </div>
+        <div class="col-12">
           <div class="input-group">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-outline-secondary me-2">&lt;&lt;</button>
+              <%= link_to '<<', topics_path, class: 'btn btn-outline-secondary me-2' %>
             </span>
             <input type="text" class="form-control" placeholder="チャット検索">
             <span class="input-group-btn">
@@ -37,7 +71,7 @@
         <div class="col-12">
           <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="pills-chat-tab" data-bs-toggle="pill" href="#pills-chat" role="tab"
+              <a class="nav-link" id="pills-chat-tab" data-bs-toggle="pill" href="#pills-chat" role="tab"
                 aria-controls="pills-chat" aria-selected="true">チャット</a>
             </li>
             <li class="nav-item" role="presentation">
@@ -48,30 +82,45 @@
         </div>
         <div class="col-12">
           <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab">
+            <div class="tab-pane fade show mb-5" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab">
+              <% @chat_posts.each do |post| %>
               <div class="mb-3 px-3 py-3 border">
                 <div class="d-flex align-items-start">
                   <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
                     チャットだよ
                   </div>
                   <div>
-                    <p>名前 <span>1分前</span></p>
-                    <p>見出しを説明するための見出しの下のテキストの段落。私たちはそれに別の文を追加し、おそらく単語がなくなるまで続けます。</p>
+                    <p><%= post.user.name %> <span class="text-secondary"><%= time_ago_in_words(post.created_at) %>
+                        ago</span></p>
+                    <p><%= post.content %></p>
                   </div>
                 </div>
               </div>
+              <% end %>
+              <div class="d-flex justify-content-center">
+                <%= paginate @chat_posts, :param_name => 'chat_page' %>
+              </div>
             </div>
-            <div class="tab-pane fade" id="pills-find-member" role="tabpanel" aria-labelledby="pills-find-member-tab">
+            <div class="tab-pane fade mb-5" id="pills-find-member" role="tabpanel"
+              aria-labelledby="pills-find-member-tab">
+              <% @find_members_posts.each do |post| %>
               <div class="mb-3 px-3 py-3 border">
                 <div class="d-flex align-items-start">
                   <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
                     募集だよ
                   </div>
                   <div>
-                    <p>募集 <span>100分前</span></p>
-                    <p>見出しを説明するための見出しの下のテキストの段落。私たちはそれに別の文を追加し、おそらく単語がなくなるまで続けます。</p>
+                    <p>
+                      <%= post.user.name %>
+                      <span class="text-secondary ms-2 small"><%= time_ago_in_words(post.created_at) %> ago</span>
+                    </p>
+                    <p><%= post.content %></p>
                   </div>
                 </div>
+              </div>
+              <% end %>
+              <div class="d-flex justify-content-center">
+                <%= paginate @find_members_posts, :param_name => 'find_members_page' %>
               </div>
             </div>
           </div>
@@ -83,10 +132,13 @@
 <div class="fixed-bottom">
   <div class="container">
     <div class="col-lg-6 offset-lg-3 bg-light pt-2 px-2">
-      <textarea class="form-control chat-textarea mb-1"></textarea>
+      <%= form_for [@topic, @new_post] do |f| %>
+      <%= f.text_area :content, class: 'form-control chat-textarea mb-1', placeholder: 'チャットを入力' %>
+      <%= f.hidden_field :post_type %>
       <div class="text-end">
-        <a class="btn btn-sm btn-success text-end mb-2">送信</a>
+        <%= f.submit "送信", class: "btn btn-sm btn-success text-end mb-2" %>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
