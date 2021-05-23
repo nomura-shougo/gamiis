@@ -1,6 +1,13 @@
 <% content_for :title, 'gamiis' %>
 <% content_for :content do %>
 <div class="px-4 py-5 my-5 text-center">
+  <div class="container">
+    <div class="col-lg-6 mx-auto">
+      <div class="d-flex justify-content-start">
+        <%= link_to '<<', request.referer, class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
   <h1 class="display-5 fw-bold"><%= @user.name %></h1>
   <img class="d-block mx-auto mb-4" src="../images/bootstrap-logo.svg" alt="" width="72" height="57">
   <div class="col-lg-6 mx-auto">
