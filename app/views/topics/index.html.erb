@@ -11,8 +11,8 @@
         <div class="col-12">
           <%= search_form_for @q do |f| %>
           <div class="input-group">
-          <%= f.search_field :name_cont, class: 'form-control', placeholder: 'グループ検索' %>
-          <%= f.submit "検索", class: 'btn btn-default' %>
+            <%= f.search_field :name_cont, class: 'form-control', placeholder: 'グループ検索' %>
+            <%= f.submit "検索", class: 'btn btn-default' %>
           </div>
           <% end %>
         </div>
@@ -51,8 +51,13 @@
                 <div class="card-title">
                   <%= link_to topic.name, topic_posts_path(topic), class: 'stretched-link' %></div>
                 <div class="card-body">
-                  <p class="card-text"><small>190人</small>
-                    <small>5分前</small><%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end position-relative', style: 'z-index: 2;' %>
+                  <p class="card-text">
+                    <small class="text-secondary me-2"><%= topic.users.count %>人</small>
+                    <% if topic.posts.present?%>
+                    <small
+                      class="text-secondary"><%= time_ago_in_words(topic.posts.order(created_at: "DESC").first.created_at) %>ago</small>
+                    <% end %>
+                    <!--<%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end position-relative', style: 'z-index: 2;' %>-->
                   </p>
                   <% unless logged_in? && current_user&.participations.find_by(topic_id: topic.id) %>
                   <div class="float-end mb-2">
