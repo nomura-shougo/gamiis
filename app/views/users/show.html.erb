@@ -1,4 +1,30 @@
 <% content_for :title, 'gamiis' %>
+<% content_for :stylesheets do %>
+<style>
+  .user_icon {
+    border-radius: 50%;
+    /* 角丸半径を50%にする(=円形にする) */
+    width: 80px;
+    /* 縦横を同じ値にする */
+    height: 80px;
+    /* 縦横を同じ値にする */
+    object-fit: cover;
+    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
+  }
+
+  .user_icon_main {
+    border-radius: 50%;
+    /* 角丸半径を50%にする(=円形にする) */
+    width: 200px;
+    /* 縦横を同じ値にする */
+    height: 200px;
+    /* 縦横を同じ値にする */
+    object-fit: cover;
+    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
+  }
+
+</style>
+<% end %>
 <% content_for :content do %>
 <div class="px-4 py-5 my-5 text-center">
   <div class="container">
@@ -16,7 +42,11 @@
     </div>
   </div>
   <h1 class="display-5 fw-bold"><%= @user.name %></h1>
-  <img class="d-block mx-auto mb-4" src="../images/bootstrap-logo.svg" alt="" width="72" height="57">
+  <div class="d-flex justify-content-center my-2">
+    <% if @user.picture.present? %>
+    <%= image_tag @user.picture.url, class: 'user_icon_main border border-light', width: '100%' %>
+    <% end %>
+  </div>
   <%= link_to '編集', edit_user_path(@user), class: 'btn btn-primary mb-3' %>
   <div class="col-lg-6 mx-auto">
     <!--<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -49,8 +79,10 @@
         <% @posts.each do |post| %>
         <div class="mb-3 px-3 py-3 border">
           <div class="d-flex align-items-start">
-            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-              チャットだよ
+            <div class="flex-shrink-0 me-3">
+              <% if post.user.picture.present? %>
+              <%= image_tag post.user.picture.url, class: 'user_icon border border-light', width: '100%' %>
+              <% end %>
             </div>
             <div>
               <p><%= post.user.name %> <span class="text-secondary"><%= time_ago_in_words(post.created_at) %>

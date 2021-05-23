@@ -18,6 +18,24 @@ class TopicsController < ApplicationController
     end
   end
 
+  def show
+    @topic = Topic.find(params[:id])
+  end
+
+  def edit
+    @topic = Topic.find(params[:id])
+  end
+
+  def update
+    @topic = Topic.find(params[:id])
+    if @topic.update(topic_params)
+      flash[:success] = "グループ情報を更新しました"
+      redirect_to action: :show
+    else
+      render 'edit'
+    end
+  end
+
   def destroy
     topic = Topic.find(params[:id])
     if topic.blank?
@@ -33,6 +51,6 @@ class TopicsController < ApplicationController
   private
 
     def topic_params
-      params.require(:topic).permit(:name)
+      params.require(:topic).permit(:name, :picture)
     end
 end

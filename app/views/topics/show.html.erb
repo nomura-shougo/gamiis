@@ -1,0 +1,64 @@
+<% content_for :title, 'gamiis' %>
+<% content_for :stylesheets do %>
+<style>
+  .topic_icon {
+    border-radius: 50%;
+    /* 角丸半径を50%にする(=円形にする) */
+    width: 200px;
+    /* 縦横を同じ値にする */
+    height: 200px;
+    /* 縦横を同じ値にする */
+    object-fit: cover;
+    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
+  }
+
+</style>
+<% end %>
+<% content_for :content do %>
+<div class="container">
+  <div class="col-lg-6 offset-lg-3">
+    <% flash.each do |message_type, message| %>
+    <div class="col-12">
+      <p class="text-center alert-<%= message_type %> py-3">
+        <%= message %>
+      </p>
+    </div>
+    <% end %>
+    <div class="d-flex justify-content-start mt-2">
+      <%= link_to '<<', topic_posts_path(@topic), class: 'btn btn-outline-secondary' %>
+    </div>
+    <div class="row my-3">
+      <div class="col-8">
+        <h3 class="mb-0">グループ情報</h3>
+      </div>
+      <div class="col-4 d-flex justify-content-end">
+        <%= link_to '編集', edit_topic_path(@topic), class: 'btn btn-primary' %>
+      </div>
+    </div>
+    <div>
+      <div class="d-flex justify-content-center my-2">
+        <% if @topic.picture.present? %>
+        <%= image_tag @topic.picture.url, class: 'topic_icon border border-light', width: '100%' %>
+        <% end %>
+      </div>
+      <div class="row g-3">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row">グループ名</th>
+              <td><%= @topic.name %></td>
+            </tr>
+            <tr>
+              <th scope="row">参加人数</th>
+              <td><%= @topic.users.count %>人</td>
+            </tr>
+            <tr>
+              <th scope="row">チャット数</th>
+              <td><%= @topic.posts.count %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <% end %>

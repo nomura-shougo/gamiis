@@ -68,8 +68,11 @@
           </p>
         </div>
         <% end %>
-        <div class="col-12">
-          <h3><%= @topic.name %></h3>
+        <div class="col-8">
+          <h3 class="mb-0"><%= @topic.name %></h3>
+        </div>
+        <div class="col-4 d-flex justify-content-end">
+          <%= link_to 'グループ情報', topic_path(@topic), class: 'btn btn-primary' %>
         </div>
         <div class="col-12">
           <%= search_form_for @q, url: topic_posts_url(@topic), class: 'input-group' do |f| %>
