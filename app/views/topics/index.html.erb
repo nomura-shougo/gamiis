@@ -16,7 +16,7 @@
           </div>
           <% end %>
         </div>
-        <div class="col-3">
+        <!--<div class="col-3">
           <select class="form-select" aria-label="Default select example">
             <option selected>並び替え</option>
             <option value="1">One</option>
@@ -24,7 +24,13 @@
             <option value="3">Three</option>
           </select>
         </div>
-        <div class="col-9">
+        <div class="col-3">
+          <%= search_form_for @q, class: 'form-select' do |f| %>
+          <%= f.select :sorts, [['人数順', 'users.count desc'], ['最近のチャット', 'posts.order(created_at: "DESC").first.created_at desc'], ['最近のグループ', 'created_at desc']],
+           {include_blank: '並び替え'}  %>
+          <% end %>
+        </div>-->
+        <div class="col-12">
           <div class="float-end">
             <%= link_to '新しいグループを作る', new_topic_path, class: 'btn btn-success' %>
           </div>
