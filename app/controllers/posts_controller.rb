@@ -1,8 +1,19 @@
 class PostsController < ApplicationController
   def index
     @topic = Topic.find(params[:topic_id])
-    @chat_posts = @topic.posts.with_post_type(:chat).order(created_at: "DESC").page(params[:chat_page]).per(10)
-    @find_members_posts = @topic.posts.with_post_type(:find_members).order(created_at: "DESC").page(params[:find_members_page]).per(10)
+    @q = Post.ransack(params[:q])
+    @chat_posts = @q.result(distinct: true)
+                    .where(topic_id: @topic.id)
+                    .with_post_type(:chat)
+                    .order(created_at: "DESC")
+                    .page(params[:chat_page])
+                    .per(10)
+    @find_members_posts = @q.result(distinct: true)
+                            .where(topic_id: @topic.id)
+                            .with_post_type(:find_members)
+                            .order(created_at: "DESC")
+                            .page(params[:find_members_page])
+                            .per(10)
     @new_post = Post.new
   end
 

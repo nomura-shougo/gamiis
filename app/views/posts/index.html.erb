@@ -61,15 +61,11 @@
           <h3><%= @topic.name %></h3>
         </div>
         <div class="col-12">
-          <div class="input-group">
-            <span class="input-group-btn">
-              <%= link_to '<<', topics_path, class: 'btn btn-outline-secondary me-2' %>
-            </span>
-            <input type="text" class="form-control" placeholder="チャット検索">
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-light ms-1">検索</button>
-            </span>
-          </div>
+          <%= search_form_for @q, url: topic_posts_url(@topic), class: 'input-group' do |f| %>
+          <%= link_to '<<', topics_path, class: 'btn btn-outline-secondary me-2' %>
+          <%= f.search_field :content_cont, class: 'form-control', placeholder: 'チャット検索' %>
+          <%= f.submit "検索", class: 'btn btn-light ms-1' %>
+          <% end %>
         </div>
         <div class="col-12">
           <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
