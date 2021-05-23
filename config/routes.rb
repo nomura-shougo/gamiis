@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   post '/signin', to: 'sessions#create'
   get '/signout', to: 'sessions#destroy'
 
-  resources :users
+  resources :users do
+    member do
+      get :topics
+    end
+  end
   resources :topics do
     resources :posts
     resources :participations, only: [:create, :destroy]

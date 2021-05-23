@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row g-3">
         <div class="col py-3 px-3 btn btn-success me-2 position-relative">
-          <%= link_to 'リンクです', topics_path, class: 'stretched-link text-white text-decoration-none' %>
+          <%= link_to '参加グループ: ' + @user.topics.count.to_s, topics_user_path(@user), class: 'stretched-link text-white text-decoration-none' %>
         </div>
         <!--<div class="col py-3 px-3 btn btn-primary me-2">
           1 of 2

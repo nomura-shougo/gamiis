@@ -18,6 +18,11 @@ class UsersController < ApplicationController
     @posts = @user.posts.order(created_at: "DESC").page(params[:page]).per(10)
   end
 
+  def topics
+    @user = User.find(params[:id])
+    @topics = @user.topics.order(created_at: "DESC").page(params[:page]).per(10)
+  end
+
   private
 
     def user_params
