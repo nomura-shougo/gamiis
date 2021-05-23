@@ -10,4 +10,6 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, presence: true, uniqueness: true
+
+  mount_uploader :picture, PictureUploader
 end

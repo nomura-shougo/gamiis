@@ -1,0 +1,33 @@
+.account-page__inner--icon__input {
+  margin: auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__image2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 180px;
+    height: 180px;
+    border-radius: 100px;
+    font-size: 0px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+}

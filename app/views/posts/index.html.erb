@@ -6,6 +6,17 @@
     max-height: 280px;
   }
 
+  .user_icon {
+    border-radius: 50%;
+    /* 角丸半径を50%にする(=円形にする) */
+    width: 80px;
+    /* 縦横を同じ値にする */
+    height: 80px;
+    /* 縦横を同じ値にする */
+    object-fit: cover;
+    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
+  }
+
 </style>
 <% end %>
 <% content_for :javascripts do %>
@@ -85,8 +96,10 @@
               <% @chat_posts.each do |post| %>
               <div class="mb-3 px-3 py-3 border">
                 <div class="d-flex align-items-start">
-                  <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                    チャットだよ
+                  <div class="flex-shrink-0 me-3">
+                    <% if post.user.picture.present? %>
+                    <%= image_tag post.user.picture.url, class: 'user_icon border border-light', width: '100%' %>
+                    <% end %>
                   </div>
                   <div>
                     <p><%= post.user.name %> <span
@@ -106,8 +119,10 @@
               <% @find_members_posts.each do |post| %>
               <div class="mb-3 px-3 py-3 border">
                 <div class="d-flex align-items-start">
-                  <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                    募集だよ
+                  <div class="flex-shrink-0 me-3">
+                    <% if post.user.picture.present? %>
+                    <%= image_tag post.user.picture.url, class: 'user_icon border border-light', width: '100%' %>
+                    <% end %>
                   </div>
                   <div>
                     <p>
