@@ -1,6 +1,7 @@
 # Gamiis
 ゲーム好きの人のためのコミュニケーションサービスです<br>
-URL: http://gamiis.tk/
+URL: <a href="http://gamiis.tk/" target="_blank">http://gamiis.tk/</a>
+
 <img width="1250" alt="スクリーンショット 2021-05-25 9 52 05" src="https://user-images.githubusercontent.com/63100083/119423738-f02c7700-bd3e-11eb-8fbd-a4e82f8f1068.png">
 # 機能
 - ユーザ登録
