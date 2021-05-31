@@ -1,7 +1,8 @@
 # Gamiis
 ゲーム好きの人のためのコミュニケーションサービスです<br>
 URL: http://gamiis.tk/
-<img width="1250" alt="スクリーンショット 2021-05-25 9 52 05" src="https://user-images.githubusercontent.com/63100083/119423738-f02c7700-bd3e-11eb-8fbd-a4e82f8f1068.png">
+<img width="1358" alt="スクリーンショット 2021-05-31 12 01 54" src="https://user-images.githubusercontent.com/63100083/120133985-2159eb00-c208-11eb-927f-ccbcc8484e2e.png">
+
 # 機能
 - ユーザ登録
 - ログイン
@@ -48,4 +49,4 @@ URL: http://gamiis.tk/
 - Unicorn
 - Nginx
 ## 本番環境の構成
-![AWS-gamiis drawio](https://user-images.githubusercontent.com/63100083/119424766-09362780-bd41-11eb-8a26-64f1c2c883ce.png)
+![AWS-gamiis drawio](https://user-images.githubusercontent.com/63100083/120133545-574a9f80-c207-11eb-821e-82090135a231.png)
