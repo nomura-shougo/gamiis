@@ -1,0 +1,7 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'participations.schema'
+require 'posts.schema'
+require 'replies.schema'
+require 'topics.schema'
+require 'users.schema'
