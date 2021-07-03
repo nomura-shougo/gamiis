@@ -30,6 +30,7 @@ URL: http://gamiis.tk/
 
 ## gem
 - webpacker
+- ridgepole (データベース管理)
 - sorcery (認証機能)
 - carrierwave (画像アップロード)
 - mini_magick (画像リサイズ)
