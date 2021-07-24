@@ -16,20 +16,6 @@
           </div>
           <% end %>
         </div>
-        <!--<div class="col-3">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>並び替え</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="col-3">
-          <%= search_form_for @q, class: 'form-select' do |f| %>
-          <%= f.select :sorts, [['人数順', 'users.count desc'], ['最近のチャット', 'posts.order(created_at: "DESC").first.created_at desc'], ['最近のグループ', 'created_at desc']],
-           {include_blank: '並び替え'}  %>
-          <% end %>
-        </div>-->
         <div class="col-12">
           <div class="float-end">
             <%= link_to '新しいグループを作る', new_topic_path, class: 'btn btn-success' %>
@@ -44,6 +30,16 @@
         </div>
       </div>
       <div class="row g-3 mb-4">
+        <div class="col-4 offset-8">
+          <%= search_form_for @q do |f| %>
+          <%= f.select( :sorts, {
+            '人数順': 'users_count desc',
+            '最近のチャット': 'latest_post_created_at desc',
+            '最近のグループ': 'created_at desc'},
+            {include_blank: '並べ替え', selected: params&.[](:q)&.[](:sorts)},
+            {class: 'form-select', onchange: 'this.form.submit()'}) %>
+          <% end %>
+        </div>
         <%= render @topics %>
       </div>
       <div class="d-flex justify-content-center">
