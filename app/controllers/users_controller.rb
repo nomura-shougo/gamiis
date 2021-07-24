@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :correct_user,   only: [:edit, :update]
+
   def new
     @user = User.new
   end
@@ -41,5 +43,13 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :picture)
+    end
+
+    def correct_user
+      user = User.find(params[:id])
+      return if user == current_user
+
+      flash[:danger] = "アカウントが正しくありません"
+      redirect_to(root_url)
     end
 end

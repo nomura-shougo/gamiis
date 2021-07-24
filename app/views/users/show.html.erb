@@ -31,12 +31,14 @@
     </div>
   </div>
   <h1 class="display-5 fw-bold"><%= @user.name %></h1>
-  <div class="d-flex justify-content-center my-2">
+  <div class="d-flex justify-content-center my-3">
     <% if @user.picture.present? %>
     <%= image_tag @user.picture.url, class: 'user_icon_main border border-light', width: '100%' %>
     <% end %>
   </div>
+  <% if @user.id == current_user&.id %>
   <%= link_to '編集', edit_user_path(@user), class: 'btn btn-primary mb-3' %>
+  <% end %>
   <div class="col-lg-6 mx-auto">
     <!--<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
       <button type="button" class="btn btn-success btn-lg px-4 gap-3">参加グループ<br />15</button>
