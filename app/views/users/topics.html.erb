@@ -1,19 +1,4 @@
 <% content_for :title, 'gamiis' %>
-<% content_for :stylesheets do %>
-<style>
-  .topic_icon {
-    border-radius: 50%;
-    /* 角丸半径を50%にする(=円形にする) */
-    width: 80px;
-    /* 縦横を同じ値にする */
-    height: 80px;
-    /* 縦横を同じ値にする */
-    object-fit: cover;
-    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
-  }
-
-</style>
-<% end %>
 <% content_for :content do %>
 <div class="container">
   <div class="row mb-4">
@@ -30,34 +15,7 @@
         </div>
       </div>
       <div class="row g-3 mb-4">
-        <% @topics.each do |topic| %>
-        <div class="col-12">
-          <div class="card">
-            <div class="row g-0 px-3 py-3">
-              <div class="col-3">
-                <% if topic.picture.present? %>
-                <%= image_tag topic.picture.url, class: 'topic_icon border border-light', width: '100%' %>
-                <% end %>
-              </div>
-              <div class="col-md-9">
-                <div class="card-title">
-                  <%= link_to topic.name, topic_posts_path(topic), class: 'stretched-link text-decoration-none text-dark' %>
-                </div>
-                <div class="card-body">
-                  <p class="card-text">
-                    <small class="text-secondary me-2"><%= topic.users.count %>人</small>
-                    <% if topic.posts.present?%>
-                    <small
-                      class="text-secondary"><%= time_ago_in_words(topic.posts.order(created_at: "DESC").first.created_at) %>
-                      ago</small>
-                    <% end %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
+        <%= render @topics %>
       </div>
       <div class="d-flex justify-content-center">
         <%= paginate @topics %>

@@ -1,19 +1,4 @@
 <% content_for :title, 'gamiis' %>
-<% content_for :stylesheets do %>
-<style>
-  .topic_icon {
-    border-radius: 50%;
-    /* 角丸半径を50%にする(=円形にする) */
-    width: 80px;
-    /* 縦横を同じ値にする */
-    height: 80px;
-    /* 縦横を同じ値にする */
-    object-fit: cover;
-    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
-  }
-
-</style>
-<% end %>
 <% content_for :content do %>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Gamiis</h1>
@@ -59,38 +44,7 @@
         </div>
       </div>
       <div class="row g-3 mb-4">
-        <% @topics.each do |topic| %>
-        <div class="col-12">
-          <div class="card">
-            <div class="row g-0 px-3 py-3">
-              <div class="col-3">
-                <% if topic.picture.present? %>
-                <%= image_tag topic.picture.url, class: 'topic_icon border border-light', width: '100%' %>
-                <% end %>
-              </div>
-              <div class="col-9">
-                <div class="card-title">
-                  <%= link_to topic.name, topic_posts_path(topic), class: 'stretched-link text-decoration-none text-dark' %></div>
-                <div class="card-body">
-                  <p class="card-text">
-                    <small class="text-secondary me-2"><%= topic.users.count %>人</small>
-                    <% if topic.posts.present?%>
-                    <small
-                      class="text-secondary"><%= time_ago_in_words(topic.posts.order(created_at: "DESC").first.created_at) %> ago</small>
-                    <% end %>
-                    <!--<%= link_to '削除', "/topics/#{topic.id}", method: :delete, class: 'float-end position-relative', style: 'z-index: 2;' %>-->
-                  </p>
-                  <% unless logged_in? && current_user&.participations.find_by(topic_id: topic.id) %>
-                  <div class="float-end mb-2">
-                    <%= link_to '参加する', topic_participations_path(topic), method: 'post', class: 'btn btn-primary position-relative', style: 'z-index: 2;' %>
-                  </div>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
+        <%= render @topics %>
       </div>
       <div class="d-flex justify-content-center">
         <%= paginate @topics %>
