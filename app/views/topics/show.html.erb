@@ -32,7 +32,9 @@
         <h3 class="mb-0">グループ情報</h3>
       </div>
       <div class="col-4 d-flex justify-content-end">
+        <% if logged_in? && current_user&.participations&.find_by(topic_id: @topic.id) %>
         <%= link_to '編集', edit_topic_path(@topic), class: 'btn btn-primary' %>
+        <% end %>
       </div>
     </div>
     <div>

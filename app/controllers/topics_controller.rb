@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  before_action :correct_user, only: [:edit, :update]
   def index
     @q = Topic.ransack(params[:q])
     @topics = @q.result(distinct: true).page(params[:page]).per(10)
@@ -52,5 +53,12 @@ class TopicsController < ApplicationController
 
     def topic_params
       params.require(:topic).permit(:name, :picture)
+    end
+
+    def correct_user
+      return if logged_in? && current_user&.participations&.find_by(topic_id: params[:id])
+
+      flash[:danger] = "グループ編集権限がありません"
+      redirect_to(root_url)
     end
 end
