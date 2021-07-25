@@ -36,8 +36,20 @@
     <%= image_tag @user.picture.url, class: 'user_icon_main border border-light', width: '100%' %>
     <% end %>
   </div>
+  <% if current_user.present? %>
   <% if @user.id == current_user&.id %>
   <%= link_to '編集', edit_user_path(@user), class: 'btn btn-primary mb-3' %>
+  <% elsif current_user.following?(@user) %>
+  <%= form_for(current_user&.active_relationships&.find_by(followed_id: @user.id),
+             html: { method: :delete }) do |f| %>
+  <%= f.submit "フォロー中", class: "btn btn-primary mb-3" %>
+  <% end %>
+  <% else %>
+  <%= form_for(current_user&.active_relationships&.build) do |f| %>
+  <div><%= hidden_field_tag :followed_id, @user.id %></div>
+  <%= f.submit "フォローする", class: "btn btn-outline-primary mb-3" %>
+  <% end %>
+  <% end %>
   <% end %>
   <div class="col-lg-6 mx-auto">
     <!--<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -47,15 +59,15 @@
     </div>-->
     <div class="container">
       <div class="row g-3">
-        <div class="col py-3 px-3 btn btn-success me-2 position-relative">
+        <div class="col-12 py-3 px-3 btn btn-success me-2 position-relative">
           <%= link_to '参加グループ: ' + @user.topics.count.to_s, topics_user_path(@user), class: 'stretched-link text-white text-decoration-none' %>
         </div>
-        <!--<div class="col py-3 px-3 btn btn-primary me-2">
-          1 of 2
+        <div class="col py-3 px-3 btn btn-primary me-2 position-relative">
+          <%= link_to @user.following.count.to_s + ' フォロー', following_user_path(@user), class: 'stretched-link text-white text-decoration-none' %>
         </div>
-        <div class="col bg-primary py-3 px-3">
-          2 of 2
-        </div>-->
+        <div class="col py-3 px-3 btn btn-primary position-relative">
+          <%= link_to @user.followers.count.to_s + ' フォロワー', followers_user_path(@user), class: 'stretched-link text-white text-decoration-none' %>
+        </div>
       </div>
     </div>
   </div>

@@ -39,6 +39,20 @@ class UsersController < ApplicationController
     @topics = @user.topics.order(created_at: "DESC").page(params[:page]).per(10)
   end
 
+  def following
+    @title = "フォロー中"
+    @user  = User.find(params[:id])
+    @users = @user.following.page(params[:page]).per(10)
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "フォロワー"
+    @user  = User.find(params[:id])
+    @users = @user.followers.page(params[:page]).per(10)
+    render 'show_follow'
+  end
+
   private
 
     def user_params

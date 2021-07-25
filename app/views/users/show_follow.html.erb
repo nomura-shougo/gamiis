@@ -1,0 +1,27 @@
+<% content_for :title, 'gamiis' %>
+<% content_for :content do %>
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-lg-6 offset-lg-3">
+      <% flash.each do |message_type, message| %>
+      <div class="col-12">
+        <p class="text-center alert-<%= message_type %> py-3">
+          <%= message %>
+        </p>
+      </div>
+      <% end %>
+      <div class="d-flex justify-content-start mt-2">
+        <%= link_to '<<', user_path(@user), class: 'btn btn-outline-secondary' %>
+      </div>
+      <div class="row my-3">
+        <div class="col-8">
+          <h3 class="mb-0"><%= @user.name %>の<%= @title %>: <%= @users.count %></h3>
+        </div>
+        <div class="row g-3 mb-4">
+          <%= render @users  %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :topics
+      get :following, :followers
     end
   end
   resources :topics do
     resources :posts
     resources :participations, only: [:create, :destroy]
   end
+  resources :relationships, only: [:create, :destroy]
 end

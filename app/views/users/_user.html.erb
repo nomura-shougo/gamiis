@@ -1,0 +1,37 @@
+<% content_for :stylesheets do %>
+<style>
+  .user_icon {
+    border-radius: 50%;
+    /* 角丸半径を50%にする(=円形にする) */
+    width: 80px;
+    /* 縦横を同じ値にする */
+    height: 80px;
+    /* 縦横を同じ値にする */
+    object-fit: cover;
+    /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
+  }
+
+</style>
+<% end %>
+<div class="mb-3 px-3 py-3 border position-relative">
+  <div class="d-flex align-items-start">
+    <div class="flex-shrink-0 me-3">
+      <% if user.picture.present? %>
+      <%= image_tag user.picture.url, class: 'user_icon border border-light stretched-link', width: '100%', style: 'z-index: 2;' %>
+      <% end %>
+    </div>
+    <div>
+      <p>
+        <%= link_to user.name, user_url(user), class: 'stretched-link text-decoration-none text-dark' %>
+        <span
+          class="text-secondary ms-2 small"><%= time_ago_in_words(user&.posts&.order(created_at: "DESC").first&.created_at) %>
+          ago</span></p>
+      <div class="py-3 px-3 btn btn-primary me-2 position-relative">
+        <%= link_to user.following.count.to_s + ' フォロー', following_user_path(user), class: 'stretched-link text-white text-decoration-none', style: 'z-index: 2;' %>
+      </div>
+      <div class="py-3 px-3 btn btn-primary position-relative">
+        <%= link_to user.followers.count.to_s + ' フォロワー', followers_user_path(user), class: 'stretched-link text-white text-decoration-none', style: 'z-index: 2;'  %>
+      </div>
+    </div>
+  </div>
+</div>
